@@ -1,14 +1,33 @@
-
+var SONG_LYRICS_URL = 'https://api.lyrics.ovh/v1/';
 function getDataFromApi(artist, title, callback) {
-  //your code here
+  const settings = {
+    url: SONG_LYRICS_URL + artist + '/' + title,
+    dataType: 'json',
+    method: 'get',
+    success: callback
+  };
+  $.ajax(settings);
 }
 
 function displaySearchData(data) {
-  //your code here
+  console.log(data);
+  console.log(data.lyrics);
+  let lyrics = data.lyrics;
+  $('.js-search-results').html(lyrics);
 }
 
 function watchSubmit() {
-  //your code here
+  $(".js-query-artist").prop("required", true);
+  $(".js-query-title").prop("required", true);
+  $('form').on('submit', function(event) {
+    event.preventDefault();
+    let title = $('.js-query-title').val();
+    let artist = $('.js-query-artist').val();
+    getDataFromApi(artist, title, displaySearchData);
+    $('.js-query-title').val('');
+    $('.js-query-artist').val('');
+});
+
 }
 
 $(watchSubmit);
