@@ -10,10 +10,8 @@ function getDataFromApi(artist, title, callback) {
 }
 
 function displaySearchData(data) {
-  console.log(data);
-  console.log(data.lyrics);
-  let lyrics = data.lyrics;
-  $('.js-search-results').html(lyrics);
+  let lyrics = data.lyrics.replace(/(?:\r\n|\r|\n)/g, '<br>');
+  $('.js-search-results').html(lyrics).text();
 }
 
 function watchSubmit() {
